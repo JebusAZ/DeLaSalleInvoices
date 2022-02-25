@@ -4,7 +4,7 @@ using Xunit;
 using System.Collections.Generic;
 using Moq;
 using System.Threading.Tasks;
-using DeLaSalle.Invoices.Api.Repositories.Interfaces;
+using DeLaSalle.Invoices.Api.Repositories.Interface;
 
 namespace DeLaSalle.Invoices.Tests.ApiServices;
 
@@ -21,7 +21,7 @@ public class CustomerServiceTest
 
 
     };
-    var mock = new Mock<ICustomerRepositories>();
+    var mock = new Mock<ICustomerRepository>();
 
     mock.Setup(m=> m.GetAllAsync()).Returns(Task.FromResult(expected));
 

@@ -1,7 +1,10 @@
-using DeLaSalle.Invoices.Api.Repositories;
-using DeLaSalle.Invoices.Api.Repositories.Interfaces;
+using DeLaSalle.Invoices.Api.Repository;
+using DeLaSalle.Invoices.Api.Repositories.Interface;
 using DeLaSalle.Invoices.Api.Services;
-using DeLaSalle.Invoices.Api.Services.Interfaces;
+using DeLaSalle.Invoices.Api.Services.Interface;
+
+using DeLaSalle.Invoices.Api.MiddlwareExtension;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +15,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+//builder.Services.AddSingleton<ICustomerRepository,CustomerInMemoryRepository>();;
+
 builder.Services.AddScoped<ICustomerService,CustomerService>();
-builder.Services.AddScoped<ICustomerRepositories,CustomerInMemoryRepository>();
+builder.Services.AddSingleton<ICustomerRepository,CustomerInMemoryRepository>();
 
 
 
@@ -27,6 +33,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+//app.UseExceptionHandler("/api/error");
+
+app.ConfigureExceptionHandler();
 
 app.UseAuthorization();
 
